@@ -1,0 +1,59 @@
+cmake_minimum_required(VERSION 3.7)
+
+project(CPP_GAME
+        VERSION 1.0.0
+        LANGUAGES C CXX
+)
+
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(SDL2 REQUIRED)
+
+if (SDL2_FOUND)
+  message("SDL2 found")
+else()
+  message(FATAL_ERROR "Cannot find SDL2")
+endif()
+
+# find_package(OpenGL REQUIRED)
+
+# if (OpenGL_FOUND)
+#   message("OpenGL found")
+# else()
+#   message(FATAL_ERROR "Cannot find OpenGL")
+# endif()
+
+
+
+set(SOURCE 
+  core/src/Game.cpp
+#   api/imgui/imgui.cpp 
+#   api/imgui/imgui_demo.cpp 
+#   api/imgui/imgui_draw.cpp 
+#   api/imgui/imgui_tables.cpp 
+#   api/imgui/imgui_widgets.cpp
+
+#   api/imgui_sdl/imgui_sdl.cpp
+  # api/imgui/backends/imgui_impl_sdl.cpp 
+  # api/imgui/backends/imgui_impl_opengl2.cpp
+
+#   engine/core/FrameBuffer.cpp
+)
+
+add_executable(CPP_GAME Main.cpp ${SOURCE})
+
+target_include_directories(CPP_GAME
+  PRIVATE
+    ${SDL2_INCLUDE_DIRS}
+    ${PROJECT_SOURCE_DIR}/core/header
+    # ${PROJECT_SOURCE_DIR}/api/imgui
+    # ${PROJECT_SOURCE_DIR}/api/imgui/backends
+    # ${PROJECT_SOURCE_DIR}/api/imgui_sdl
+    # ${PROJECT_SOURCE_DIR}/engine/core
+)
+
+target_link_libraries(CPP_GAME 
+  PRIVATE 
+  ${SDL2_LIBRARIES}
+  # ${OPENGL_gl_LIBRARY}
+)
