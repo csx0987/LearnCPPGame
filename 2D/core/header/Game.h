@@ -1,14 +1,8 @@
 #pragma once
+#include <vector>
+#include <unordered_map>
+#include <string>
 #include <SDL.h>
-
-const int THICKNESS = 15;
-const int PADDLEH = 60;
-
-struct Vector2
-{
-    float x;
-    float y;
-};
 
 class Game
 {
@@ -17,22 +11,36 @@ private:
     SDL_Renderer *mRenderer;
     bool mIsRunning;
 
-    Vector2 mBallPos;
-    Vector2 mP;
-
     Uint32 mTicksCount;
 
-    int mPaddleDir;
+    std::vector<class Actor*> mActors;
+    std::vector<class Actor*> mPendingActors;
+    std::vector<class SpriteComponent*> mSprites;
+    std::unordered_map<std::string, SDL_Texture*> mTextures;
 
-    Vector2 mBallVel;
+    bool mUpdatingActors;
+
+    class Ship* mShip;
 
     void ProcessInput(); // 处理输入
     void UpdateGame(); // 
     void GenerateOutput();
+    void LoadData();
+    void UnloadData();
 public:
     Game();
 
     bool Initialize();
     void RunLoop();
     void Shutdown();
+
+    void AddActor(class Actor* actor);
+    void RemoveActor(class Actor* actor);
+    void AddSprite(class SpriteComponent* sprite);
+    void RemoveSprite(class SpriteComponent* sprite);
+
+
+
+    SDL_Texture* LoadTexture(const char *fileName);
+    SDL_Texture* GetTexture(const std::string &fileName);
 };
