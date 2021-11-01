@@ -26,9 +26,7 @@ public:
 
 private:
     std::string mCurrAnimName;
-    // std::unordered_map<std::string, std::vector<SDL_Texture*>> mAnimation;
     std::unordered_map<std::string, Animation> mAnimation;
-    std::vector<SDL_Texture*> mAnimTextures;
     float mCurrFrame;
     float mAnimFPS;
 };

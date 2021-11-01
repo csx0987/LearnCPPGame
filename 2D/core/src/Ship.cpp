@@ -14,7 +14,8 @@ Ship::Ship(Game *game)
     //     game->GetTexture("../Assets/Ship03.png"),
     //     game->GetTexture("../Assets/Ship04.png")
     // };
-    // asc->SetAnimTextures(anims);
+    // asc->SetAnimation("walk", anims, true);
+
 
     std::vector<SDL_Texture*> walk = {
         game->GetTexture("../Assets/Character01.png"),
