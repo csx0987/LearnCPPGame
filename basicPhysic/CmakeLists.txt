@@ -1,0 +1,65 @@
+cmake_minimum_required(VERSION 3.7)
+
+project(CPP_GAME
+        VERSION 1.0.0
+        LANGUAGES C CXX
+)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+
+if (SDL2_FOUND)
+  message("SDL2 found")
+else()
+  message(FATAL_ERROR "Cannot find SDL2")
+endif()
+
+if (SDL2IMAGE_FOUND)
+  message("SDL2_Image found")
+else()
+  message(FATAL_ERROR "Cannot find SDL2_Image")
+endif()
+
+# find_package(OpenGL REQUIRED)
+
+# if (OpenGL_FOUND)
+#   message("OpenGL found")
+# else()
+#   message(FATAL_ERROR "Cannot find OpenGL")
+# endif()
+
+
+
+set(SOURCE 
+  core/src/Game.cpp
+  core/src/MathTool.cpp
+  core/src/Actor.cpp
+  core/src/Component.cpp
+  core/src/SpriteComponent.cpp
+  core/src/Ship.cpp
+  core/src/MoveComponent.cpp
+  core/src/Asteroid.cpp
+  core/src/Random.cpp
+  core/src/InputComponent.cpp
+  core/src/CircleComponent.cpp
+  core/src/Laser.cpp
+)
+
+add_executable(CPP_GAME Main.cpp ${SOURCE})
+
+target_include_directories(CPP_GAME
+  PRIVATE
+    ${SDL2_INCLUDE_DIRS}
+    ${SDL2_IMAGE_DIRS}
+    ${PROJECT_SOURCE_DIR}/core/header
+)
+
+target_link_libraries(CPP_GAME 
+  PRIVATE 
+  ${SDL2_LIBRARIES}
+  ${SDL2_IMAGE_LIBRARIES}
+)
