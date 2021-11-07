@@ -14,16 +14,24 @@ InputComponent::InputComponent(class Actor *owner)
 
 void InputComponent::ProcessInput(const uint8_t * keyState) 
 {
-    float forwardSpeed = 0.0f;
+    // float forwardSpeed = 0.0f;
+    float forceValue = 0.0f;
     if (keyState[mForwardKey]) 
     {
-        forwardSpeed += mMaxForwardSpeed;
+        // forwardSpeed += mMaxForwardSpeed;
+        forceValue += mMaxForceValue;
     }
     if (keyState[mBackKey])
     {
-        forwardSpeed -= mMaxForwardSpeed;
+        // forwardSpeed -= mMaxForwardSpeed;
+        forceValue -= mMaxForceValue;
     }
-    SetForwardSpeed(forwardSpeed);
+    // SetForwardSpeed(forwardSpeed);
+    if (!Math::NearZero(forceValue))
+    {
+        AddForce(mOwner->GetForward() * forceValue);
+    }
+
 
     float angularSpeed = 0.0f;
     if (keyState[mClockwiseKey])

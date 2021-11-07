@@ -18,8 +18,10 @@ Ship::Ship(Game *game)
     ic->SetBackKey(SDL_SCANCODE_S);
     ic->SetClockwiseKey(SDL_SCANCODE_A);
     ic->SetCounterClockwiseKey(SDL_SCANCODE_D);
-    ic->SetMaxForwardSpeed(300.0f);
+    // ic->SetMaxForwardSpeed(300.0f);
+    ic->SetMaxForceValue(100.0f);
     ic->SetMaxAngularSpeed(Math::TwoPi);
+    ic->SetMaxSpeed(300.0f);
 
     mCircle = new CircleComponent(this);
     mCircle->SetRadius(11.0f);
@@ -55,6 +57,7 @@ void Ship::ActorInput(const uint8_t *keyState)
         Laser *laser = new Laser(GetGame());
         laser->SetPosition(GetPosition());
         laser->SetRotation(GetRotation());
+        laser->AddForce(GetForward() * 2000000.0f);
 
         mLaserCooldown = 0.5f;
     }
