@@ -17,7 +17,10 @@ Asteroid::Asteroid(Game *game)
     sc->SetTexture(game->GetTexture("../Assets/Asteroid.png"));
 
     MoveComponent *mc = new MoveComponent(this);
-    mc->SetForwardSpeed(150.0f);
+    // mc->SetForwardSpeed(150.0f);
+    mc->SetMass(1);
+    mc->AddForce(mc->GetForward() * 150000.0f);
+    mc->SetMaxSpeed(150.0f);
 
     // 包围盒
     mCircle = new CircleComponent(this);

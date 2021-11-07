@@ -147,6 +147,13 @@ public:
         return Vector2(vec.x * scale, vec.y * scale);
     }
 
+	Vector2& operator/ (const float scale)
+	{
+		x /= scale;
+		y /= scale;
+		return *this;
+	}
+
     Vector2& operator*= (const float scale)
     {
         x *= scale;
@@ -343,3 +350,20 @@ public:
     static const Matrix3 Identity;
 
 };
+
+
+namespace Math
+{
+	inline bool NearZero(const Vector2 &val, float epsilon = 0.001f)
+	{
+		if (fabs(val.x) <= epsilon && fabs(val.y) <= epsilon)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+} // namespace Math
+
