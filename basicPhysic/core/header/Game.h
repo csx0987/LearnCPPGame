@@ -24,6 +24,8 @@ private:
 
     std::vector<class Asteroid*> mAsteroids;
 
+    float mRebirthTime;
+
     void ProcessInput(); // 处理输入
     void UpdateGame(); // 
     void GenerateOutput();
@@ -46,4 +48,6 @@ public:
     std::vector<class Asteroid*>& GetAsteroids() { return mAsteroids; }
 
     SDL_Texture* GetTexture(const std::string &fileName);
+
+    void ClearShip() { mShip = nullptr; }
 };

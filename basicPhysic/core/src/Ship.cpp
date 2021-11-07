@@ -3,6 +3,8 @@
 #include "InputComponent.h"
 #include "Game.h"
 #include "Laser.h"
+#include "CircleComponent.h"
+#include "Asteroid.h"
 
 Ship::Ship(Game *game)
 :Actor(game)
@@ -18,11 +20,32 @@ Ship::Ship(Game *game)
     ic->SetCounterClockwiseKey(SDL_SCANCODE_D);
     ic->SetMaxForwardSpeed(300.0f);
     ic->SetMaxAngularSpeed(Math::TwoPi);
+
+    mCircle = new CircleComponent(this);
+    mCircle->SetRadius(11.0f);
+}
+
+Ship::~Ship()
+{
+    GetGame()->ClearShip();
 }
 
 void Ship::UpdateActor(float deltaTime)
 {
     mLaserCooldown -= deltaTime;
+
+    Game *game = GetGame();
+
+    auto asteroids = game->GetAsteroids();
+
+    for (auto ast : asteroids)
+    {
+        if (Intersect(*mCircle, *(ast->GetCircle())))
+        {
+            SetState(EDead);
+            break;
+        }
+    }
 }
 
 void Ship::ActorInput(const uint8_t *keyState)

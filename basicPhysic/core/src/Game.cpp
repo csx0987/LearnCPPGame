@@ -14,6 +14,7 @@ Game::Game()
 ,mIsRunning(true)
 ,mUpdatingActors(false)
 ,mShip(nullptr)
+,mRebirthTime(3.0f)
 {
 
 }
@@ -131,6 +132,22 @@ void Game::UpdateGame()
     if (deltaTime > 0.05f)
     {
         deltaTime = 0.05f;
+    }
+
+    // 飞船重生逻辑
+    if (mShip == nullptr)
+    {
+        if (mRebirthTime <= 0.0f)
+        {
+            mShip = new Ship(this);
+            mShip->SetPosition(Vector2(512.0f, 384.0f));
+            mShip->SetRotation(Math::PiOver2);
+            mRebirthTime = 3.0f;
+        }
+        else
+        {
+            mRebirthTime -= deltaTime;
+        }
     }
 
     mUpdatingActors = true;
